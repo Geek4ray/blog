@@ -4,8 +4,6 @@ title: About Me
 permalink: /about/
 ---
 
-This website is powered by **[fastpages](https://github.com/fastai/fastpages)** [^1].
 
+My Name is Rayan Kejriwal, I am a currently a Final Year B.Tech. ECE undergraduate student at IIIT Allahabad, India. I am a Data Science Enthusiast following AI research community and seeking for automation in the real- world. Always willing to live in a competitive environment, meeting people and exploring new technologies leveraging the power of AI. 
 
-
-[^1]:a blogging platform that natively supports Jupyter notebooks in addition to other formats.

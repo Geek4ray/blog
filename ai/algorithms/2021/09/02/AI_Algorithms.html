@@ -138,14 +138,6 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><a href="https://colab.research.google.com/github/Geek4ray/blog/blob/master/_notebooks/2021-09-02-AI_Algorithms.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Lets-talk-about-basic-SGD-in-Pytorch">
 <a class="anchor" href="#Lets-talk-about-basic-SGD-in-Pytorch" aria-hidden="true"><span class="octicon octicon-link"></span></a>Lets talk about basic SGD in Pytorch<a class="anchor-link" href="#Lets-talk-about-basic-SGD-in-Pytorch"> </a>
 </h1>
@@ -1187,9 +1179,12 @@ Epoch_9_accuracy =  0.5040026903152466
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>`&gt; Note: Now we will use fastai Dataloaders for to Load Data in mini-batches rathar than a single row in SGD. Just To say</p>
+<p></p>
+<div class="flash">
+    <svg class="octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
+    <strong>Note: </strong>Now we will use fastai Dataloaders for to Load Data in mini-batches rathar than a single row in SGD. Just To say 
+</div> * Dataset - A list of tuples each tuple of form -&gt; $(x_i,y_i)$
 <ul>
-<li>Dataset - A list of tuples each tuple of form -&gt; $(x_i,y_i)$</li>
 <li>DataLoader - An Iterable/List of Minibatches where each minibatch is of the form $tuple(tensor(x_1,x_2,...,x_b), (y_1,y_2,...,y_b))$.</li>
 </ul>
 

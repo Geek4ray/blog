@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>https://geek4ray.github.io/blog/2021/09/01/My-Resume.html</loc>
-<lastmod>2021-09-01T00:00:00-05:00</lastmod>
-</url>
-<url>
 <loc>https://geek4ray.github.io/blog/ai/algorithms/2021/09/02/AI_Algorithms.html</loc>
 <lastmod>2021-09-02T00:00:00-05:00</lastmod>
 </url>
 <url>
 <loc>https://geek4ray.github.io/blog/fastpages/jupyter/2021/09/02/introducing-fastpages.html</loc>
 <lastmod>2021-09-02T00:00:00-05:00</lastmod>
+</url>
+<url>
+<loc>https://geek4ray.github.io/blog/2021/09/18/My-Resume.html</loc>
+<lastmod>2021-09-18T00:00:00-05:00</lastmod>
+</url>
+<url>
+<loc>https://geek4ray.github.io/blog/fastpages/jupyter/2021/09/18/_09_19_Tesla_AI_Day.html</loc>
+<lastmod>2021-09-18T00:00:00-05:00</lastmod>
 </url>
 <url>
 <loc>https://geek4ray.github.io/blog/about/</loc>

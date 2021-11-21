@@ -11,14 +11,14 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="This blog explains MinGPT Model implementation on Addition Data, by Andrej Karpathy." />
 <meta property="og:description" content="This blog explains MinGPT Model implementation on Addition Data, by Andrej Karpathy." />
-<link rel="canonical" href="https://geek4ray.github.io/blog/mingpt/transformars/2021/11/21/Explaining-MinGPT.html" />
-<meta property="og:url" content="https://geek4ray.github.io/blog/mingpt/transformars/2021/11/21/Explaining-MinGPT.html" />
+<link rel="canonical" href="https://geek4ray.github.io/blog/mingpt/transformers/2021/11/21/Explaining-MinGPT.html" />
+<meta property="og:url" content="https://geek4ray.github.io/blog/mingpt/transformers/2021/11/21/Explaining-MinGPT.html" />
 <meta property="og:site_name" content="Welcome to Rayan’s Blog" />
 <meta property="og:image" content="https://geek4ray.github.io/blog/images/diagram.png" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2021-11-21T00:00:00-06:00" />
 <script type="application/ld+json">
-{"url":"https://geek4ray.github.io/blog/mingpt/transformars/2021/11/21/Explaining-MinGPT.html","@type":"BlogPosting","headline":"Explaining MinGPT","dateModified":"2021-11-21T00:00:00-06:00","datePublished":"2021-11-21T00:00:00-06:00","image":"https://geek4ray.github.io/blog/images/diagram.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://geek4ray.github.io/blog/mingpt/transformars/2021/11/21/Explaining-MinGPT.html"},"author":{"@type":"Person","name":"Rayan"},"description":"This blog explains MinGPT Model implementation on Addition Data, by Andrej Karpathy.","@context":"https://schema.org"}</script>
+{"url":"https://geek4ray.github.io/blog/mingpt/transformers/2021/11/21/Explaining-MinGPT.html","@type":"BlogPosting","headline":"Explaining MinGPT","dateModified":"2021-11-21T00:00:00-06:00","datePublished":"2021-11-21T00:00:00-06:00","image":"https://geek4ray.github.io/blog/images/diagram.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://geek4ray.github.io/blog/mingpt/transformers/2021/11/21/Explaining-MinGPT.html"},"author":{"@type":"Person","name":"Rayan"},"description":"This blog explains MinGPT Model implementation on Addition Data, by Andrej Karpathy.","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://geek4ray.github.io/blog/feed.xml" title="Welcome to Rayan's Blog" /><link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -91,7 +91,7 @@ window.onload = wrap_img;
         <a class="category-tags-link" href="/blog/categories/#MinGPT">MinGPT</a>
         &nbsp;
       
-        <a class="category-tags-link" href="/blog/categories/#transformars">transformars</a>
+        <a class="category-tags-link" href="/blog/categories/#transformers">transformers</a>
         
       
       </p>
@@ -143,6 +143,58 @@ Our Objective is inspired by the addition section in the GPT-3 paper (Language M
 </div>
 </div>
 </div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="c1">#Seeding </span>
+<span class="k">def</span> <span class="nf">set_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">):</span>
+    <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">manual_seed_all</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+
+<span class="c1"># making deterministic, setting our seed</span>
+<span class="n">set_seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In order to generate data, we define our custom Addition Dataset Class. The sum of two n-digit numbers gives a third up to (n+1)-digit number. So our
+encoding will simply be the n-digit first number, n-digit second number, 
+and (n+1)-digit result, all simply concatenated together. Because each addition
+problem is so structured, there is no need to bother the model with encoding
++, =, or other tokens. Each possible sequence has the same length, and simply
+contains the raw digits of the addition problem.</p>
+<p>As a few examples, the 2-digit problems:</p>
+<ul>
+<li>85 + 50 = 135 becomes the sequence [8, 5, 5, 0, 1, 3, 5]</li>
+<li>6 + 39 = 45 becomes the sequence [0, 6, 3, 9, 0, 4, 5]
+etc.</li>
+</ul>
+<p>We will also only train GPT on the final (n+1)-digits because the first
+two n-digits are always assumed to be given. So when we give GPT an exam later,
+we will e.g. feed it the sequence [0, 6, 3, 9], which encodes that we'd like
+to add 6 + 39, and hope that the model completes the integer sequence with [0, 4, 5] in 3 sequential steps.</p>
+
+</div>
+</div>
+</div>
 </div>
 
 
@@ -155,7 +207,7 @@ Our Objective is inspired by the addition section in the GPT-3 paper (Language M
         theme="github-light"
         crossorigin="anonymous"
         async>
-</script><a class="u-url" href="/blog/mingpt/transformars/2021/11/21/Explaining-MinGPT.html" hidden></a>
+</script><a class="u-url" href="/blog/mingpt/transformers/2021/11/21/Explaining-MinGPT.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
